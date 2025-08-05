@@ -1,0 +1,1 @@
+<h3 class="text-center h-20 font-semibold text-xl">{{$slot}}</h3>
