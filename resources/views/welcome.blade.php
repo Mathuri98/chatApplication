@@ -13,6 +13,7 @@
 
             <main class="flex-1 flex flex-col border">
                 <div class=" flex flex-col flex-1 items-center justify-center overflow-auto space-y-12">
+                    <x-successMessage/>
                     <h1 class="text-4xl font-semibold">ChatApp</h1>
 
                     <input type="text"
