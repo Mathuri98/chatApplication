@@ -1,14 +1,12 @@
-{{-- <x-layout>
+<x-layout>
 
-    <div >
-       
+   
 
         <div class="flex flex-1 ">
 
-            <nav class=" flex flex-col w-72 p-8 bg-gray-300/20 space-y-4">
-                <a href="">New chat</a>
-                <a href="">Search Chat</a>
-
+            <nav class=" flex flex-col w-[14rem] py-5 px-5 bg-gray-300/20 space-y-4">
+                <x-sidebar.navlink route="">New Chat</x-sidebar.navlink>
+                <x-sidebar.navlink route="">Search Chat</x-sidebar.navlink>
             </nav>
 
 
@@ -18,7 +16,7 @@
                     <h1 class="text-4xl font-semibold">ChatApp</h1>
 
                     <input type="text"
-                        class="border border-black/20 rounded-3xl py-2 px-4 h-24 w-full max-w-3xl  focus:outline-none">
+                        class="border border-black/20 rounded-3xl py-2 px-4 h-20 w-full max-w-3xl  focus:outline-none" placeholder="What is the temperature like today?">
                 </div>
             </main>
 
@@ -27,6 +25,6 @@
 
 
 
-    </div>
+   
 
-</x-layout> --}}
+</x-layout>
