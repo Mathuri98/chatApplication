@@ -45,4 +45,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+//a user has many chats. each chat has many texts. 
+    public function chats(){
+        return $this->hasMany(Chat::class); 
+
+    }
 }

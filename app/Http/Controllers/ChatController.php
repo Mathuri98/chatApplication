@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
-class SessionController extends Controller
+class ChatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +14,7 @@ class SessionController extends Controller
     public function index()
     {
         //
+        return view('chats.index',);
     }
 
     /**
@@ -22,7 +23,11 @@ class SessionController extends Controller
     public function create()
     {
         //
-        return view('auth.login'); 
+      
+
+
+
+        return view('chats.create', );
     }
 
     /**
@@ -30,39 +35,30 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
-        //validate
-        //attempt to log in user 
-        //regenerate session token 
-        //return redirect 
+        //
 
 
-        $attributes= $request->validate([
-            'email' =>  ['required', 'email'], 
-            'password'=> ['required']
-        ]); 
+       $validated= $request->validate([
+        'title'=> ['required']
+       ]);
+       
+       
+        $chat= Auth::user()->chats()->create($validated); 
 
-       if(! ( Auth::attempt($attributes))){
-
-            throw ValidationException::withMessages([
-                'email'  => 'Sorry those credentials do not match. Please try again. '
-            ]);
-
-        }
-
-
-
-         $request->session()->regenerate();
-
-         return redirect('/')->with('success', 'You are Logged In'); 
+        return redirect( )->route('chats.show', ['chat' => $chat->id]); 
 
     }
 
+       
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Chat $chat)
     {
         //
+        return view('chats.show', [
+            'chat'=> $chat, 
+        ] );
     }
 
     /**
@@ -84,12 +80,8 @@ class SessionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(string $id)
     {
         //
-
-        Auth::logout();
-        return redirect('/login')->with('success', 'Logged out'); 
-
     }
 }

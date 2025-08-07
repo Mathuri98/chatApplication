@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chat;
+use App\Models\Text;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
-class SessionController extends Controller
+class TextController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +23,6 @@ class SessionController extends Controller
     public function create()
     {
         //
-        return view('auth.login'); 
     }
 
     /**
@@ -30,31 +30,22 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
-        //validate
-        //attempt to log in user 
-        //regenerate session token 
-        //return redirect 
+        //to create a new text. a chat belongs to a user and a chat can have many texts.
+        // dd('storing for {{$request->chat_id}}'); 
+        $user= Auth::user();
 
 
-        $attributes= $request->validate([
-            'email' =>  ['required', 'email'], 
-            'password'=> ['required']
+        $sentence= $request['sentence'];
+       
+//passed as hidden input from chats/create 
+        $chat= Chat::findOrFail($request['chat_id']); 
+
+        $chat->texts()->create([
+            'sentence'=> $sentence
         ]); 
+      
 
-       if(! ( Auth::attempt($attributes))){
-
-            throw ValidationException::withMessages([
-                'email'  => 'Sorry those credentials do not match. Please try again. '
-            ]);
-
-        }
-
-
-
-         $request->session()->regenerate();
-
-         return redirect('/')->with('success', 'You are Logged In'); 
-
+        return redirect( )->route('chats.show', ['chat' => $chat->id]); 
     }
 
     /**
@@ -84,12 +75,8 @@ class SessionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(string $id)
     {
         //
-
-        Auth::logout();
-        return redirect('/login')->with('success', 'Logged out'); 
-
     }
 }
