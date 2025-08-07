@@ -14,12 +14,9 @@
 
 <body class="h-screen flex flex-col ">
 
-  <x-links/> 
+    <x-links />
 
-    
-
-  {{$slot}}
-
+    {{$slot}}
 
 </body>
 

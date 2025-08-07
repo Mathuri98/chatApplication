@@ -1,20 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Chat Application</title>
-
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-</head>
-
-<body class="h-screen flex flex-col ">
-
-    <x-links />
+<x-layout>
 
     {{-- to show a specific chat and highligted it in the sidebar --}}
 
@@ -24,12 +8,12 @@
 
         <main class="flex flex-col flex-1 overflow-hidden">
             <!-- Scrollable chat area -->
-            <div class="flex-1 overflow-y-auto px-6 pt-6 space-y-2" id="scrollableContainer">
-
+            <div class="flex-1 overflow-y-auto px-6 pt-2 space-y-2" id="scrollableContainer">
+                <x-export :chat="$chat"/>
                 @if ($chat->texts->isNotEmpty())
                     @foreach ($chat->texts as $text)
-                        <div class="flex justify-end px-8 py-2 mr-16">
-                            <p class="border border-blue-500/20 px-4 py-2 rounded-xl text-xs bg-blue-300/30">
+                        <div class="flex justify-end px-8 py-0.5 mr-16">
+                            <p class="border border-blue-500/20 px-4 py-1.5 rounded-xl text-xs bg-blue-300/30">
                                 {{ $text->sentence }} </p>
                         </div>
                     @endforeach
@@ -73,8 +57,4 @@
 
     </div>
 
-
-
-</body>
-
-</html>
+</x-layout>

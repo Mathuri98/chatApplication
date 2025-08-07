@@ -1,33 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Chat Application</title>
-
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-</head>
-
-<body class="h-screen flex flex-col ">
-
-    <x-links />
-
+<x-layout>
 
 
     <div class="flex flex-1 overflow-hidden">
 
         <x-sidebar.navsection />{{-- on the left  --}}
 
-        <main class="flex flex-col flex-1 overflow-hidden">
+        <main class="flex flex-col flex-1 overflow-hidden ">
+
+           
             <!-- Scrollable chat area -->
-            <div class="flex-1 overflow-y-auto px-6 pt-6 space-y-2">
-                <div class="flex justify-end px-8 py-2">
+            <div class="flex-1 overflow-y-auto px-6 pt-2 space-y-2 ">
+                 {{-- <x-export/> --}}
+                {{-- <div class="flex justify-end px-8 py-2 border ">
                     <p class="border border-blue-500 px-4 py-2 rounded-xl text-sm">Index page</p>
-                </div>
+                </div> --}}
                
             </div>
 
@@ -37,7 +23,7 @@
                     <x-successMessage />
                   
 
-                    <h1 class="text-4xl font-semibold mb-10">ChatApp</h1>
+                    <h1 class="text-3xl font-semibold mb-10">ChatApp</h1>
 
                     <form method="POST" action="/texts" class="w-full mt-4">
                       {{-- <input hidden name="chat_id" value={{$chat->id}}>  --}}
@@ -57,8 +43,4 @@
 
     </div>
 
-
-
-</body>
-
-</html>
+</x-layout>
