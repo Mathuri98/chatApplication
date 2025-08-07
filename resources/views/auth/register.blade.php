@@ -1,4 +1,4 @@
-<x-layout>
+<x-authLayout>
 
 <div class="flex-1 flex flex-col justify-center text-center items-center  w-full">
 
@@ -52,4 +52,4 @@
   </form>
 </div>
 
-</x-layout>
+</x-authLayout>

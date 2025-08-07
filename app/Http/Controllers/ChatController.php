@@ -8,6 +8,38 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
+
+
+    public function export(Chat $chat)
+    {
+        // dd($chat->texts);
+        
+        $content = "Chat Title: {$chat->title}\n";
+        foreach ($chat->texts as $text) {
+            $content .= " - {$text->sentence}\n";
+        }
+
+        $callback = function () use ($content) {
+            echo $content;
+        };
+
+        // Return a streamed response with a suggested file name:
+        return response()->streamDownload(
+            $callback,
+            "chat-{$chat->id}.txt", // filename
+            [
+                'Content-Type' => 'text/plain',
+            ]
+        );
+
+
+
+
+
+
+
+        // return redirect('/')->with('success', 'Chats exported successfully');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -23,11 +55,11 @@ class ChatController extends Controller
     public function create()
     {
         //
-      
 
 
 
-        return view('chats.create', );
+
+        return view('chats.create',);
     }
 
     /**
@@ -38,18 +70,17 @@ class ChatController extends Controller
         //
 
 
-       $validated= $request->validate([
-        'title'=> ['required']
-       ]);
-       
-       
-        $chat= Auth::user()->chats()->create($validated); 
+        $validated = $request->validate([
+            'title' => ['required']
+        ]);
 
-        return redirect( )->route('chats.show', ['chat' => $chat->id]); 
 
+        $chat = Auth::user()->chats()->create($validated);
+
+        return redirect()->route('chats.show', ['chat' => $chat->id]);
     }
 
-       
+
     /**
      * Display the specified resource.
      */
@@ -57,8 +88,8 @@ class ChatController extends Controller
     {
         //
         return view('chats.show', [
-            'chat'=> $chat, 
-        ] );
+            'chat' => $chat,
+        ]);
     }
 
     /**
