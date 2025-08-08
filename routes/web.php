@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\LlmController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
@@ -13,12 +14,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [ChatController::class, 'index']);
     Route::get('/chats/create', [ChatController::class, 'create']);
-     Route::get('/chats/{chat}/export', [ChatController::class, 'export']);
-     Route::get('/chats/show/{chat}', [ChatController::class, 'show'])->name('chats.show');
+    Route::get('/chats/{chat}/export', [ChatController::class, 'export']);
+    Route::get('/chats/show/{chat}', [ChatController::class, 'show'])->name('chats.show');
     Route::post('/chats', [ChatController::class, 'store']);
     Route::post('/logout', [SessionController::class, 'destroy']);
-    Route::post('/texts', [TextController::class, 'store']);//creating a new text within a chat 
-   
+    Route::post('/texts', [TextController::class, 'store']); //creating a new text within a chat 
+    Route::get('/ask_llm/{instruction}', [LlmController::class, 'ask']);
+    Route::post('/llm/chat', [LlmController::class, 'chat'])->name('llm.chat');
 });
 
 
