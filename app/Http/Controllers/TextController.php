@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LlmService;
 use App\Models\Chat;
 use App\Models\Text;
 use Illuminate\Http\Request;
@@ -34,8 +35,10 @@ class TextController extends Controller
         // dd('storing for {{$request->chat_id}}'); 
         $user= Auth::user();
 
-
+//the actual string here 
         $sentence= $request['sentence'];
+
+        
        
 //passed as hidden input from chats/create 
         $chat= Chat::findOrFail($request['chat_id']); 
@@ -43,9 +46,26 @@ class TextController extends Controller
         $chat->texts()->create([
             'sentence'=> $sentence
         ]); 
-      
 
-        return redirect( )->route('chats.show', ['chat' => $chat->id]); 
+
+        $allTexts= $chat->texts; //get all texts for this chat for the llm to reason the context. otherwise it only responds to one single prompt at a time and cant recall the previous conversation.
+        $llmservice= new LlmService(); 
+        $llmController= new LlmController();
+        //  dd("\n", $allTexts->pluck('sentence')->toArray()); //get all sentences from the texts in this chat
+        $llmResponse = $llmController->ask($llmservice, $allTexts->pluck('sentence')->toArray()); //get the response from the llm
+
+        //create a new entry in the texts table for the LLM response
+        Text::create([
+            'sentence' => $llmResponse,
+            'chat_id' => $chat->id,
+            'senderType' => 'llm', // indicating this text is from the LLM
+        ]);
+      
+        // dd($llmResponse); //for debugging purposes, remove later
+        return redirect( )->route('chats.show', ['chat' => $chat->id, 'response'=> $llmResponse]); 
+
+
+
     }
 
     /**

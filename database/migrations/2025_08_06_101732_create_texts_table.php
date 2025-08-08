@@ -19,13 +19,14 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
-            $table->string('title'); 
+            $table->string('title');
         });
 
         Schema::create('texts', function (Blueprint $table) {
             $table->id();
-            $table->string('sentence');
-            $table->foreignIdFor(Chat::class)->constrained()->cascadeOnDelete(); 
+            $table->longText('sentence'); // The actual text content           
+            $table->foreignIdFor(Chat::class)->constrained()->cascadeOnDelete();
+            $table->string('senderType')->default('user'); // 'user' or 'llm'
             $table->timestamps();
         });
     }

@@ -3,7 +3,7 @@
 
 
 
-    <form action="/" method="GET" class="relative w-full max-w-sm">
+    <form action="" method="GET" class="relative w-full max-w-sm">
         @csrf
         <input type="text" name="q" id="q" placeholder="Search Chat"
             class="w-full text-sm py-1.5 pr-16 pl-3 border border-black/10 rounded-xl focus:outline-none">

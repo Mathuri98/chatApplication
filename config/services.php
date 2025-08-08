@@ -14,6 +14,13 @@ return [
     |
     */
 
+
+    'groq' => [
+        'api_key' => env('GROQ_API_KEY'),
+        'base_uri' => env('GROQ_BASE_URI', 'https://api.groq.com/openai/v1'),
+    ],
+
+
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
