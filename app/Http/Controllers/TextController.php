@@ -61,9 +61,15 @@ class TextController extends Controller
             'senderType' => 'llm', // indicating this text is from the LLM
         ]);
       
-        // dd($llmResponse); //for debugging purposes, remove later
-        return redirect( )->route('chats.show', ['chat' => $chat->id, 'response'=> $llmResponse]); 
+        // dd($llmResponse); //for debugging purposes, remove later. we only need to transfer the chat id 
+        // return redirect( )->route('chats.show', ['chat' => $chat->id]); 
 
+        return response()->json([
+            
+        
+            'llm_response' => $llmResponse,
+            'chat_id' => $chat->id,
+        ]);
 
 
     }
