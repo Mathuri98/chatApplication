@@ -8,7 +8,7 @@
 
         <main class="flex flex-col flex-1 overflow-hidden">
             <!-- Scrollable chat area -->
-            <div class="flex-1 overflow-y-auto px-6 pt-2 space-y-2 bg-gray-400" id="scrollableContainer">
+            <div class="flex-1 overflow-y-auto px-6 pt-2 space-y-2 " id="scrollableContainer">
                 <x-export :chat="$chat" />
                 {{-- section to DISPLAY the text messages --}}
                 @if ($chat->texts->isNotEmpty())
@@ -49,8 +49,8 @@
                     <x-successMessage />
 
 
-                    @if ($chat->texts->isEmpty())
-                        <h1 class="text-3xl font-semibold mb-14">ChatApp</h1>
+                    @if ($chat->texts->isEmpty() )
+                        <h1 class="text-3xl font-semibold mb-14" id="chatHeading">ChatApp</h1>
                     @endif
 
                     <form class="w-full mt-4" id="textForm">
@@ -80,6 +80,12 @@
                                 `<p class="border border-blue-500/20 px-4 py-1.5 rounded-xl text-xs bg-blue-300/30">${sentence}</p>`;
                             container.appendChild(userMsg);
                             container.scrollTop = container.scrollHeight; //scroll to the bottom 
+
+                            let heading= document.getElementById('chatHeading');
+                            if (heading) {
+                                heading.remove(); //remove the heading if it exists
+                            }
+                            
 
 
                             fetch('/texts', {
