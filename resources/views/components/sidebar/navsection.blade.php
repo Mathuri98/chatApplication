@@ -17,10 +17,7 @@
 
     @if (Auth::user()->chats->isNotEmpty())
         @php
-            // $chats = \App\Models\Chat::where('user_id', auth()->id())
-            //     ->latest() // same as ->orderBy('created_at', 'desc')
-            //     ->get();
-
+            
             $query = request('q');
             // Step 2: Start building the query for the Chat model
             $chatQuery = \App\Models\Chat::where('user_id', auth()->id());
@@ -37,7 +34,7 @@
             $chats = $chatQuery->get();
             if ($chats->isEmpty()) {
                 echo '<p class="text-center text-gray-500 text-sm ">No chats found</p>';
-                // <x-sidebar.navlink route="/chats/create">New Chat</x-sidebar.navlink>
+           
             }
 
         @endphp
