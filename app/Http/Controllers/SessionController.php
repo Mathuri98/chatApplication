@@ -8,13 +8,7 @@ use Illuminate\Validation\ValidationException;
 
 class SessionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -34,8 +28,6 @@ class SessionController extends Controller
         //attempt to log in user 
         //regenerate session token 
         //return redirect 
-
-
         $attributes= $request->validate([
             'email' =>  ['required', 'email'], 
             'password'=> ['required']
@@ -48,39 +40,11 @@ class SessionController extends Controller
             ]);
 
         }
-
-
-
          $request->session()->regenerate();
 
          return redirect('/')->with('success', 'You are Logged In'); 
 
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      */
