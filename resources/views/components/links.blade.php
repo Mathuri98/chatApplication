@@ -13,10 +13,7 @@
    
      <div class="h-14  flex space-x-8 justify-end pr-6 py-3 ">
       
-
                    <x-sidebar.navlink route="/" class="">Home</x-sidebar.navlink>
-
-      
                 <form action="/logout" method="POST">
                   @csrf
                   <button class="rounded-xl border border-black/20 px-4 py-1  bg-black text-white text-sm">Log Out</button>

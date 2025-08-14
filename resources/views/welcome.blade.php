@@ -1,16 +1,10 @@
 <x-layout>
-
-   
-
         <div class="flex flex-1 ">
 
             <nav class=" flex flex-col w-[14rem] py-5 px-5 bg-gray-300/20 space-y-4">
                 <x-sidebar.navlink route="">New Chat</x-sidebar.navlink>
                 <x-sidebar.navlink route="">Search Chat</x-sidebar.navlink>
             </nav>
-
-
-
             <main class="flex-1 flex flex-col border">
                 <div class=" flex flex-col flex-1 items-center justify-end mb-16 overflow-auto space-y-12">
                     <x-successMessage/>
@@ -26,10 +20,5 @@
             </main>
 
         </div>
-
-
-
-
-   
 
 </x-layout>

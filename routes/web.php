@@ -9,14 +9,11 @@ use App\Http\Controllers\TextController;
 use Illuminate\Support\Facades\Route;
 
 
-
-
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [SessionController::class, 'destroy']);
     Route::post('/texts', [TextController::class, 'store']); //creating a new text within a chat 
    
 });
-
 
 Route::middleware(['auth'])->controller(ChatController::class)->group(function () {
     Route::get('/', 'index');

@@ -28,11 +28,7 @@
                             </div>
                         @endif
                     @endforeach
-
-
-
                 @endif
-
 
             </div>
             <script>
@@ -49,7 +45,7 @@
                     <x-successMessage />
 
 
-                    @if ($chat->texts->isEmpty() )
+                    @if ($chat->texts->isEmpty())
                         <h1 class="text-3xl font-semibold mb-14" id="chatHeading">ChatApp</h1>
                     @endif
 
@@ -67,7 +63,7 @@
                         document.getElementById('textForm').addEventListener('submit', function(e) {
                             e.preventDefault(); // stop normal form submission
 
-//get the prompt from the input field as "sentence"
+                            //get the prompt from the input field as "sentence"
                             let sentence = document.getElementById('sentence').value;
                             let chatId = {{ $chat->id }}; // from Blade (Chat show controller sends chat to this current view)
                             let csrfToken = document.querySelector('input[name="_token"]').value;
@@ -81,11 +77,11 @@
                             container.appendChild(userMsg);
                             container.scrollTop = container.scrollHeight; //scroll to the bottom 
 
-                            let heading= document.getElementById('chatHeading');
+                            let heading = document.getElementById('chatHeading');
                             if (heading) {
                                 heading.remove(); //remove the heading if it exists
                             }
-                            
+
 
 
                             fetch('/texts', {
@@ -94,7 +90,7 @@
                                         'Content-Type': 'application/json',
                                         'X-CSRF-TOKEN': csrfToken
                                     },
-                                    body: JSON.stringify({  //this is the data we send to the server
+                                    body: JSON.stringify({ //this is the data we send to the server
                                         sentence: sentence,
                                         chat_id: chatId
                                     })
@@ -116,7 +112,7 @@
                                 .catch(error => {
                                     console.error('Error:', error);
                                 });
-//clears out the input field after submission
+                            //clears out the input field after submission
                             document.getElementById('sentence').value = '';
                         });
                     </script>

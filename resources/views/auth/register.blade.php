@@ -29,26 +29,13 @@
       <x-forms.errors error_name="password"/> 
     </div>
     
-
-    
      <div class="flex flex-col text-center  w-full p-3">
       <x-forms.label name="password_confirmation" label="Confirm Password"/>
       <x-forms.input id="password_confirmation" type="password" required /> 
       <x-forms.errors error_name="password_confirmation"/>
     </div>
-    
-
-    
-
-
-    <x-forms.button>Create Account</x-forms.button>
-
-    
-
-
-
-
-   
+  
+    <x-forms.button>Create Account</x-forms.button>   
   </form>
 </div>
 
