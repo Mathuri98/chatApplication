@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ class ChatController extends Controller
     public function export(Chat $chat)
     {
         // dd($chat->texts);
-        
+
         $content = "Chat Title: {$chat->title}\n";
         foreach ($chat->texts as $text) {
             $content .= " - {$text->sentence}\n";
@@ -87,32 +88,12 @@ class ChatController extends Controller
     public function show(Chat $chat)
     {
         //
+      
+        // dd(config('broadcasting.connections.pusher.key'));
         return view('chats.show', [
             'chat' => $chat,
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+   
 }
