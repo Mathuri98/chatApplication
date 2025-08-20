@@ -59,6 +59,9 @@
                         {{-- <button class="hidden"></button> --}}
                     </form>
 
+
+
+
                     <script>
                         document.getElementById('textForm').addEventListener('submit', function(e) {
                             e.preventDefault(); // stop normal form submission
@@ -67,15 +70,6 @@
                             let sentence = document.getElementById('sentence').value;
                             let chatId = {{ $chat->id }}; // from Blade (Chat show controller sends chat to this current view)
                             let csrfToken = document.querySelector('input[name="_token"]').value;
-
-                            let container = document.getElementById('scrollableContainer');
-                            //just recreating the div and p we have above to display the messages from the database. 
-                            let userMsg = document.createElement('div');
-                            userMsg.className = 'leading-relaxed flex justify-end px-8 py-1.5 mr-32';
-                            userMsg.innerHTML =
-                                `<p class="border border-blue-500/20 px-4 py-1.5 rounded-xl text-xs bg-blue-300/30">${sentence}</p>`;
-                            container.appendChild(userMsg);
-                            container.scrollTop = container.scrollHeight; //scroll to the bottom 
 
                             let heading = document.getElementById('chatHeading');
                             if (heading) {
@@ -100,22 +94,42 @@
                                     console.log('Success:', data);
 
                                     // Append LLM response to chat UI
-                                    if (data.llm_response) {
-                                        let llmMsg = document.createElement('div');
-                                        llmMsg.className = 'flex justify-start px-8 py-1.5 mr-32 ml-28';
-                                        llmMsg.innerHTML =
-                                            `<p class="leading-relaxed border border-gray-500/20 px-4 py-1.5 rounded-xl text-xs bg-gray-300/30">${data.llm_response}</p>`;
-                                        container.appendChild(llmMsg);
-                                        container.scrollTop = container.scrollHeight;
-                                    }
+
                                 })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                });
+                          
                             //clears out the input field after submission
                             document.getElementById('sentence').value = '';
                         });
                     </script>
+
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            window.Echo.channel("chat")
+                                .listen(".MessageSent", (data) => {
+                                    console.log("📩 Message received:", data);
+
+                                    let container = document.getElementById('scrollableContainer');
+                                    let msg = document.createElement('div');
+
+                                    if (data.senderType === "user") {
+                                        msg.className = 'leading-relaxed flex justify-end px-8 py-1.5 mr-32';
+                                        msg.innerHTML =
+                                            `<p class="border border-blue-500/20 px-4 py-1.5 rounded-xl text-xs bg-blue-300/30">${data.message}</p>`;
+                                    } else {
+                                        msg.className = 'flex justify-start px-8 py-1.5 mr-32 ml-28';
+                                        msg.innerHTML =
+                                            `<p class="leading-relaxed border border-gray-500/20 px-4 py-1.5 rounded-xl text-xs bg-gray-300/30">${data.message}</p>`;
+                                    }
+
+                                    container.appendChild(msg);
+                                    container.scrollTop = container.scrollHeight;
+                                });
+                        });
+                    </script>
+
+
+
                 </div>
             </div>
 
