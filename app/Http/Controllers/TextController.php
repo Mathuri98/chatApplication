@@ -47,7 +47,7 @@ class TextController extends Controller
         ]);
 
 
-        broadcast(new MessageSent($llmText->sentence, 'llm', $chat->id))->toOthers();
+        // broadcast(new MessageSent($llmText->sentence, 'llm', $chat->id))->toOthers();
 
         return response()->json([
 

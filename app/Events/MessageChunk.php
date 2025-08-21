@@ -14,15 +14,15 @@ class MessageChunk implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $chatId;
-    public $textId;
+    
     public $chunk;
+    public $unique_id;
 
-    public function __construct($chatId, $textId, $chunk)
+    public function __construct( $chunk, $unique_id=null)
     {
-        $this->chatId = $chatId;
-        $this->textId = $textId;
+       
         $this->chunk = $chunk;
+        $this->unique_id = $unique_id ?? uniqid(); // Generate a unique ID if not provided
     }
 
     public function broadcastOn()

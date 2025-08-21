@@ -96,7 +96,7 @@
                                     // Append LLM response to chat UI
 
                                 })
-                          
+
                             //clears out the input field after submission
                             document.getElementById('sentence').value = '';
                         });
@@ -105,31 +105,54 @@
 
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
-                             const currentChatId = {{ $chat->id }}; // embed as number
-                            window.Echo.channel("chat")
-                                .listen(".MessageSent", (data) => {
-                                    console.log("📩 Message received:", data);
+                            const currentChatId = {{ $chat->id }};
+                            const container = document.getElementById('scrollableContainer');
 
-                                    let container = document.getElementById('scrollableContainer');
-                                    let msg = document.createElement('div');
+                            const chatChannel = window.Echo.channel("chat");
 
-                                    if(currentChatId=== data.chatId) { // Check if the message is for this chat
-                                        if (data.senderType === "user") {
+                            // Listen for user messages
+                            chatChannel.listen(".MessageSent", (data) => {
+                                let msg = document.createElement('div');
+
+                                if (currentChatId === data.chatId) {
+                                    if (data.senderType === "user") {
                                         msg.className = 'leading-relaxed flex justify-end px-8 py-1.5 mr-32';
                                         msg.innerHTML =
                                             `<p class="border border-blue-500/20 px-4 py-1.5 rounded-xl text-xs bg-blue-300/30">${data.message}</p>`;
-                                    } else {
-                                        msg.className = 'flex justify-start px-8 py-1.5 mr-32 ml-28';
-                                        msg.innerHTML =
-                                            `<p class="leading-relaxed border border-gray-500/20 px-4 py-1.5 rounded-xl text-xs bg-gray-300/30">${data.message}</p>`;
                                     }
-                                    } else {
-                                        return; // Ignore messages not related to this chat
-                                    }
-
+                                    // } else {
+                                    //     msg.className = 'flex justify-start px-8 py-1.5 mr-32 ml-28';
+                                    //     msg.innerHTML =
+                                    //         `<p class="leading-relaxed border border-gray-500/20 px-4 py-1.5 rounded-xl text-xs bg-gray-300/30">${data.message}</p>`;
+                                    // }
                                     container.appendChild(msg);
                                     container.scrollTop = container.scrollHeight;
-                                });
+                                }
+                            });
+
+
+                            let currentUniqueId = null;
+                            let currentMsgDiv = null;
+
+                            chatChannel.listen('.MessageChunk', (data) => {
+                                // If this is a new LLM response, create a new bubble
+                                if (currentUniqueId !== data.unique_id) {
+                                    currentUniqueId = data.unique_id;
+                                    console.log('New unique_id:', currentUniqueId);
+
+                                    currentMsgDiv = document.createElement('div');
+                                    currentMsgDiv.className = 'flex justify-start px-8 py-1.5 mr-32 ml-28';
+                                    currentMsgDiv.innerHTML =
+                                        `<p class="leading-relaxed border border-gray-500/20 px-4 py-1.5 rounded-xl text-xs bg-gray-300/30"></p>`;
+                                    container.appendChild(currentMsgDiv);
+                                }
+
+                                if (currentMsgDiv) {
+                                    currentMsgDiv.querySelector('p').textContent += data.chunk;
+                                    container.scrollTop = container.scrollHeight;
+                                }
+                            });
+
                         });
                     </script>
 
