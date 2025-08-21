@@ -7,17 +7,7 @@
 
         <main class="flex flex-col flex-1 overflow-hidden ">
 
-           
-            <!-- Scrollable chat area -->
-            <div class="flex-1 overflow-y-auto px-6 pt-2 space-y-2 ">
-                 {{-- <x-export/> --}}
-                {{-- <div class="flex justify-end px-8 py-2 border ">
-                    <p class="border border-blue-500 px-4 py-2 rounded-xl text-sm">Index page</p>
-                </div> --}}
-               
-            </div>
-
-
+        
             <div class="w-full  mb-10 flex justify-center">
                 <div class="w-full max-w-3xl bg-white px-6 py-4 text-center">
                     <x-successMessage />
@@ -37,9 +27,6 @@
             </div>
 
         </main>
-
-
-
 
     </div>
 

@@ -29,7 +29,7 @@ class TextController extends Controller
             'sentence' => $sentence
         ]);
 
-        broadcast(new MessageSent($text->sentence, 'user'))->toOthers();
+        broadcast(new MessageSent($text->sentence, 'user', $chat->id))->toOthers();
 
 
 
@@ -37,7 +37,7 @@ class TextController extends Controller
         $llmservice = new LlmService();
         $llmController = new LlmController();
 
-        $llmResponse = $llmController->ask($llmservice, $allTexts->pluck('sentence')->toArray()); //get the response from the llm
+        $llmResponse = $llmController->ask($llmservice, $allTexts->pluck('sentence')->toArray()); //get the response from the llm. This is the full response. 
 
         //create a new entry in the texts table for the LLM response
         $llmText = Text::create([
@@ -47,7 +47,7 @@ class TextController extends Controller
         ]);
 
 
-        broadcast(new MessageSent($llmText->sentence, 'llm'))->toOthers();
+        broadcast(new MessageSent($llmText->sentence, 'llm', $chat->id))->toOthers();
 
         return response()->json([
 

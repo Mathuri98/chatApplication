@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\LlmController;
 use App\Http\Controllers\RegisteredUserController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TextController;
 use Illuminate\Support\Facades\Route;

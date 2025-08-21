@@ -15,7 +15,7 @@ window.Echo = new Echo({
   wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
   forceTLS: false,
   enabledTransports: ['ws', 'wss'],
-   disableStats: true,
+  disableStats: true,
   cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,//added this line
 
 });

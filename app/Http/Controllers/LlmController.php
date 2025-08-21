@@ -10,7 +10,7 @@ class LlmController extends Controller
     //
 
     public function ask(LlmService $llm, array $instructions)
-    {
+    {//instructions is the user prompts. 
         $response = $llm->generateText($instructions);
         // dd($response); // For debugging, remove in production
       
