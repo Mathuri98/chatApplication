@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\MessageSent;
 use App\Models\Chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +12,6 @@ class ChatController extends Controller
 
     public function export(Chat $chat)
     {
-        // dd($chat->texts);
 
         $content = "Chat Title: {$chat->title}\n";
         foreach ($chat->texts as $text) {
@@ -33,13 +31,6 @@ class ChatController extends Controller
             ]
         );
 
-
-
-
-
-
-
-        // return redirect('/')->with('success', 'Chats exported successfully');
     }
     /**
      * Display a listing of the resource.
@@ -56,10 +47,6 @@ class ChatController extends Controller
     public function create()
     {
         //
-
-
-
-
         return view('chats.create',);
     }
 
@@ -69,8 +56,6 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         //
-
-
         $validated = $request->validate([
             'title' => ['required']
         ]);

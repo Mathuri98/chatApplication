@@ -105,6 +105,7 @@
 
                     <script>
                         document.addEventListener("DOMContentLoaded", () => {
+                             const currentChatId = {{ $chat->id }}; // embed as number
                             window.Echo.channel("chat")
                                 .listen(".MessageSent", (data) => {
                                     console.log("📩 Message received:", data);
@@ -112,7 +113,8 @@
                                     let container = document.getElementById('scrollableContainer');
                                     let msg = document.createElement('div');
 
-                                    if (data.senderType === "user") {
+                                    if(currentChatId=== data.chatId) { // Check if the message is for this chat
+                                        if (data.senderType === "user") {
                                         msg.className = 'leading-relaxed flex justify-end px-8 py-1.5 mr-32';
                                         msg.innerHTML =
                                             `<p class="border border-blue-500/20 px-4 py-1.5 rounded-xl text-xs bg-blue-300/30">${data.message}</p>`;
@@ -120,6 +122,9 @@
                                         msg.className = 'flex justify-start px-8 py-1.5 mr-32 ml-28';
                                         msg.innerHTML =
                                             `<p class="leading-relaxed border border-gray-500/20 px-4 py-1.5 rounded-xl text-xs bg-gray-300/30">${data.message}</p>`;
+                                    }
+                                    } else {
+                                        return; // Ignore messages not related to this chat
                                     }
 
                                     container.appendChild(msg);

@@ -17,10 +17,10 @@ class LlmService
         $this->baseUri = config('services.groq.base_uri');
     }
 
-    public function generateText($prompt)
+    public function generateText($prompts)
     {
-
-        $combinedPrompt= implode("\n", $prompt); // Combine the array of sentences into a single string
+//the llm response is generated here. 
+        $combinedPrompts= implode("\n", $prompts); // Combine the array of sentences into a single string
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type' => 'application/json',
@@ -28,7 +28,7 @@ class LlmService
             'model' => 'llama3-70b-8192', // Example Groq model
             'messages' => [
                 ['role' => 'system', 'content' => 'You are a helpful assistant.'],
-                ['role' => 'user', 'content' => $combinedPrompt]  //the content field should be a string and not an array. 
+                ['role' => 'user', 'content' => $combinedPrompts]  //the content field should be a string and not an array. 
             ],
             'max_tokens' => 256, // Adjust as needed
         ]);

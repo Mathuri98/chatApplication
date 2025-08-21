@@ -1,8 +1,6 @@
 <nav class=" flex flex-col w-[14rem] py-5 px-5 bg-gray-300/20 space-y-4 overflow-y-auto">
     <x-sidebar.navlink route="/chats/create">New Chat</x-sidebar.navlink>
 
-
-
     <form action="" method="GET" class="relative w-full max-w-sm">
         @csrf
         <input type="text" name="q" id="q" placeholder="Search Chat"
@@ -13,11 +11,9 @@
         </button>
     </form>
 
-
-
     @if (Auth::user()->chats->isNotEmpty())
         @php
-            
+
             $query = request('q');
             // Step 2: Start building the query for the Chat model
             $chatQuery = \App\Models\Chat::where('user_id', auth()->id());
@@ -34,7 +30,6 @@
             $chats = $chatQuery->get();
             if ($chats->isEmpty()) {
                 echo '<p class="text-center text-gray-500 text-sm ">No chats found</p>';
-           
             }
 
         @endphp
@@ -46,10 +41,6 @@
 
             </div>
         @endforeach
-
-
-
-
 
     @endif
 
