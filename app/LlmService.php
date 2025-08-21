@@ -33,6 +33,8 @@ class LlmService
             'max_tokens' => 256, // Adjust as needed
         ]);
 
-        return $response->json();
+        $data= $response['choices'][0]['message']['content'] ?? 'No response';
+        return $data; // plain text
+
     }
 }
