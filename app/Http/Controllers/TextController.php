@@ -35,9 +35,9 @@ class TextController extends Controller
 
         $allTexts = $chat->texts; //get all texts for this chat for the llm to reason the context. otherwise it only responds to one single prompt at a time and cant recall the previous conversation.
         $llmservice = new LlmService();
-        $llmController = new LlmController();
+        // $llmController = new LlmController();
 
-        $llmResponse = $llmController->ask($llmservice, $allTexts->pluck('sentence')->toArray()); //get the response from the llm. This is the full response. 
+        $llmResponse = $llmservice->generateText( $allTexts->pluck('sentence')->toArray()); //get the response from the llm. This is the full response. 
 
         //create a new entry in the texts table for the LLM response
         $llmText = Text::create([
